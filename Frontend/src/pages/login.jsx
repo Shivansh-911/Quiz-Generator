@@ -33,7 +33,7 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const { data } = await axios.post('/login', loginInfo);
+      const { data } = await axios.post('/auth/login', loginInfo);
       const { success, message, jwtToken, email: userEmail, error } = data;
 
       setIsLoading(false);

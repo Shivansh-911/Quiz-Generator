@@ -14,20 +14,13 @@ import { cosineSimilarity } from '../utils/similarity.js';
 import verifyUser from '../Middlewares/QuizValidation.js';
 import Quiz from '../Models/Quiz.js';
 import convertPdfToImages from '../utils/convertPdfToImages.js';
+import upload from '../Middlewares/upload.js';
 
 import groq from '../utils/groqClient.js';
 
 dotenv.config();
 
 const router = express.Router();
-
-
-const storage = multer.diskStorage({
-  destination: 'uploads/',
-  filename: (_, file, cb) =>
-    cb(null, Date.now() + path.extname(file.originalname)),
-});
-const upload = multer({ storage });
 
 
 router.get('/', verifyUser, async (req, res) => {
@@ -47,6 +40,15 @@ router.get('/', verifyUser, async (req, res) => {
 router.post('/', verifyUser, upload.single('file'), async (req, res) => {
   try {
     const { topics, description, difficulty, numQuestions } = req.body;
+    
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        error: 'No file uploaded'
+      });
+    }
+
     const filePath = req.file.path;
 
     let text = await readFileBasedOnType(filePath);

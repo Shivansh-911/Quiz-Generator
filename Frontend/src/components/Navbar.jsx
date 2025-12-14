@@ -50,7 +50,7 @@ const Navbar = () => {
                 </button>
             </div>
             <div className='flex items-center gap-20'>
-                <a href='https://github.com/shreyassiu/Quiz_Gen' target='_blank' rel="noreferrer" className='text-white flex items-center gap-3'>
+                <a href='https://github.com/Shivansh-911/Quiz-Generator' target='_blank' rel="noreferrer" className='text-white flex items-center gap-3'>
                     <img width={25} className='invert' src="/icons/github.png" alt="" />
                     <div className='font-semibold'>Github</div>
                 </a>

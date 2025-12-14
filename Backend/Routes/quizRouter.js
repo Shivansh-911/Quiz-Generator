@@ -32,6 +32,7 @@ const upload = multer({ storage });
 
 router.get('/', verifyUser, async (req, res) => {
   try {
+    //console.log('User Info:', req.user);  
     const email = req.user?.email;
     if (!email) return res.json([]);
 

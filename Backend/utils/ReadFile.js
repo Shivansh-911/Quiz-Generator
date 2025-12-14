@@ -14,11 +14,6 @@ const readDocxFile = async (filePath) => {
 
 const readPdfFile = async (filePath) => {
   const dataBuffer = await fs.promises.readFile(filePath);
-  //const pdfData = await PDFParse(dataBuffer); // note .default
-  
-
-
-
   const parser = new PDFParse({data: dataBuffer});
   const result = await parser.getText();
   await parser.destroy();

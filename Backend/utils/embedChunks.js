@@ -1,20 +1,22 @@
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
+
+const embeddingModel = new HuggingFaceInferenceEmbeddings({
+  apiKey: process.env.HUGGINGFACE_API_KEY,
+  model: "sentence-transformers/all-MiniLM-L6-v2"
+});
 
 async function embedChunks(chunks) {
-    const model = new GoogleGenerativeAIEmbeddings({
-        modelName: "embedding-001",
-        apiKey: process.env.GOOGLE_API_KEY
-    });
+  const embeddings = [];
 
-    const embeddings = [];
-    for (const chunk of chunks) {
-        const embedding = await model.embedQuery(chunk);
-        embeddings.push({
-            embedding,
-            text: chunk
-        });
-    }
-    return embeddings;
+  for (const chunk of chunks) {
+    const vector = await embeddingModel.embedQuery(chunk);
+    embeddings.push({
+      text: chunk,
+      embedding: vector
+    });
+  }
+
+  return embeddings;
 }
 
 export default embedChunks;
